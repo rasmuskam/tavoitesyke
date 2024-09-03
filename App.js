@@ -10,7 +10,7 @@ export default function App() {
   const calculate = () => {
     const ageNumber = parseInt(age, 10); 
 
-    if (!isNaN(ageNumber)) {  
+    if (ageNumber) {  
       const lower = (220 - ageNumber) * 0.65;
       const upper = (220 - ageNumber) * 0.85;
       setLowerLimit(lower);
