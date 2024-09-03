@@ -1,42 +1,44 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function App() {
-  const [age, setAge] = useState('')
-  const [lowerlimit, setLowerlimit] = useState(0);
-  const [upperlimit, setUpperlimit] = useState(0);
+  const [age, setAge] = useState('');
+  const [lowerLimit, setLowerLimit] = useState(0);
+  const [upperLimit, setUpperLimit] = useState(0);
 
-  const calculate = (value) => {
+  const calculate = () => {
+    const ageNumber = parseInt(age, 10); 
 
-    setAge(value)
-    const ageNumber = (value)
-  
-  if (ageNumber) {
-    const lower = (220-ageNumber) * 0.65;
-    const upper = (220-ageNumber) * 0.85
-    setLowerlimit(lower)
-    setUpperlimit(upper)
-  }}
+    if (!isNaN(ageNumber)) {  
+      const lower = (220 - ageNumber) * 0.65;
+      const upper = (220 - ageNumber) * 0.85;
+      setLowerLimit(lower);
+      setUpperLimit(upper);
+    } else {
+      setLowerLimit(0);
+      setUpperLimit(0);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.field}>Age</Text>
 
       <TextInput
-      style={styles.field}
-      placeholder='Type your age'
-      value={age}
-      onChangeText={text => calculate(text)}
-      keyboardType='numeric'
-
+        style={styles.field}
+        placeholder='Type your age'
+        value={age}
+        onChangeText={text => setAge(text)}
+        keyboardType='decimal-pad'
       />
+      <Button title="Calculate" onPress={calculate} ></Button>
 
       <Text style={styles.field}>Lower limit</Text>
-      <Text style={styles.field}>{lowerlimit.toFixed(2)}</Text>
+      <Text style={styles.field}>{lowerLimit.toFixed(0)}</Text>
 
       <Text style={styles.field}>Upper limit</Text>
-      <Text style={styles.field}>{upperlimit.toFixed(2)}</Text>
+      <Text style={styles.field}>{upperLimit.toFixed(0)}</Text>
 
       <StatusBar style="auto" />
     </View>
@@ -47,10 +49,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    paddingTop: 20,
+    margin: 8,
   },
   field: {
-    marginBottom: 10
+    marginTop: 8,
+    marginBottom: 8,
   }
 });
